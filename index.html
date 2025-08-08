@@ -1,9 +1,1039 @@
-// Microsoft Fabric Pipeline Demo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abishec Selvarajah - Data Scientist/ML Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #a855f7;
+            --accent-color: #c084fc;
+            --dark-purple: #1e1b4b;
+            --dark-bg: #0f0f23;
+            --dark-card: #1a1a2e;
+            --text-light: #e2e8f0;
+            --text-muted: #c7b8ea;
+            --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            --gradient-2: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            --gradient-3: linear-gradient(135deg, #c084fc 0%, #d8b4fe 100%);
+            --glow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: var(--glow);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--glow);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        .cta-button {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--glow);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element:nth-child(1) { top: 20%; right: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; right: 20%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { top: 80%; right: 5%; animation-delay: 4s; }
+        
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .skill-card {
+            background: var(--dark-card);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow);
+            border-color: var(--primary-color);
+        }
+        
+        .skill-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            box-shadow: var(--glow);
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+        
+        .project-header {
+            padding: 1.5rem;
+            background: var(--gradient-1);
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .tech-tag {
+            background: rgba(139, 92, 246, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            display: inline-block;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Demo Containers */
+        .demo-container {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        /* Interactive Elements */
+        .api-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .api-input, .api-output {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .api-input textarea {
+            width: 100%;
+            height: 120px;
+            background: rgba(15, 15, 35, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 10px;
+            color: var(--text-light);
+            padding: 1rem;
+            resize: none;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .api-input textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+        
+        .api-button {
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        
+        .api-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .api-button:active {
+            transform: translateY(0);
+        }
+        
+        /* Progress bars and animations */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.8s ease;
+            border-radius: 4px;
+        }
+        
+        /* Chart styles */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin: 1rem 0;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+        
+        .bar {
+            fill: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .bar:hover {
+            fill: var(--accent-color);
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.6));
+        }
+        
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed var(--primary-color);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: rgba(139, 92, 246, 0.05);
+        }
+        
+        .upload-zone:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        
+        .upload-zone.dragover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: var(--accent-color);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 15, 35, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                border-top: 1px solid rgba(139, 92, 246, 0.2);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .api-demo {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .loading {
+            animation: glow 1.5s ease-in-out infinite;
+        }
+        
+        /* Additional interactive elements */
+        .metric-card {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Git workflow styles */
+        .git-stage {
+            background: var(--dark-bg);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .git-stage:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+        
+        .git-stage.active {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: var(--glow);
+        }
+        
+        .stage-status {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.3);
+            margin: 0.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .git-stage.active .stage-status {
+            background: var(--gradient-1);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+        
+        /* Console/terminal styles */
+        .console {
+            background: rgba(15, 15, 35, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            height: 150px;
+            overflow-y: auto;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .console::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .console::-webkit-scrollbar-track {
+            background: rgba(139, 92, 246, 0.1);
+        }
+        
+        .console::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">Abishec Selvarajah</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#demos">Demos</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>Data Scientist & BI Analyst</h1>
+                <p class="hero-subtitle">Transforming business data into actionable insights with Microsoft Fabric, ESG analytics, and modern DevOps practices</p>
+                <a href="#projects" class="cta-button">Explore My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Core Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Microsoft Fabric & BI</h3>
+                    <p>Power BI, Data Factory, Synapse Analytics, DAX, Power Query, Real-time analytics, Data warehousing</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌱</div>
+                    <h3>ESG & Sustainability Analytics</h3>
+                    <p>Environmental data analysis, Sustainability reporting, Carbon footprint modeling, ESG KPIs, Regulatory compliance</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔄</div>
+                    <h3>DevOps & Version Control</h3>
+                    <p>Git workflows, Azure DevOps, CI/CD pipelines, Infrastructure as Code, Automated testing, Deployment strategies</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Data Engineering</h3>
+                    <p>Python, SQL, ETL pipelines, Apache Spark, Data modeling, API development, Cloud platforms</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>ESG Analytics Dashboard</h3>
+                    </div>
+                    <div class="project-content">
+                        <p>Built comprehensive ESG reporting system for Pure Industrial using Microsoft Fabric and Power BI. Automated carbon footprint calculations and sustainability KPI tracking across facilities.</p>
+                        <div style="margin: 1rem 0;">
+                            <span class="tech-tag">Power BI</span>
+                            <span class="tech-tag">Microsoft Fabric</span>
+                            <span class="tech-tag">DAX</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Fabric Data Pipeline</h3>
+                    </div>
+                    <div class="project-content">
+                        <p>Designed automated ETL pipelines in Microsoft Fabric connecting multiple data sources. Implemented real-time data processing for business intelligence reporting with Git-based version control.</p>
+                        <div style="margin: 1rem 0;">
+                            <span class="tech-tag">Data Factory</span>
+                            <span class="tech-tag">Synapse Analytics</span>
+                            <span class="tech-tag">Azure DevOps</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Industrial BI Analytics</h3>
+                    </div>
+                    <div class="project-content">
+                        <p>Developed interactive business intelligence dashboards tracking operational KPIs, cost optimization, and performance metrics using advanced DAX calculations and data modeling.</p>
+                        <div style="margin: 1rem 0;">
+                            <span class="tech-tag">Power Query</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demos Section -->
+    <section id="demos">
+        <div class="container">
+            <h2 class="section-title">Live Demos</h2>
+            
+            <!-- Fabric Integration Demo -->
+            <div class="demo-container">
+                <h3>Microsoft Fabric Pipeline Demo</h3>
+                <p>Interactive simulation of data processing pipeline in Microsoft Fabric</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div class="metric-card">
+                        <h4>📊 Data Sources</h4>
+                        <div id="dataSource1" class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <small>SQL Database</small>
+                    </div>
+                    <div class="metric-card">
+                        <h4>⚙️ Data Factory</h4>
+                        <div id="dataFactory" class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <small>ETL Processing</small>
+                    </div>
+                    <div class="metric-card">
+                        <h4>📈 Power BI</h4>
+                        <div id="powerBI" class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <small>Visualization</small>
+                    </div>
+                </div>
+                <button class="api-button" onclick="runFabricPipeline()">▶️ Run Pipeline</button>
+                <div id="fabricLogs" class="console"></div>
+            </div>
+            
+            <!-- ESG Metrics Dashboard -->
+            <div class="demo-container">
+                <h3>ESG Analytics Dashboard</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                    <div class="metric-card">
+                        <h4 style="color: var(--accent-color);">Carbon Footprint</h4>
+                        <div class="metric-value" id="carbonMetric">2.4k</div>
+                        <small>tonnes CO2e</small>
+                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↓ 12% vs last month</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4 style="color: var(--primary-color);">Energy Efficiency</h4>
+                        <div class="metric-value" id="energyMetric">89%</div>
+                        <small>efficiency score</small>
+                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↑ 5% improvement</div>
+                    </div>
+                    <div class="metric-card">
+                        <h4 style="color: var(--secondary-color);">ESG Score</h4>
+                        <div class="metric-value" id="esgMetric">8.7</div>
+                        <small>out of 10</small>
+                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↑ 0.3 points</div>
+                    </div>
+                </div>
+                <button class="api-button" onclick="updateESGMetrics()">🔄 Refresh Metrics</button>
+            </div>
+
+            <!-- Document Analysis Demo -->
+            <div class="demo-container">
+                <h3>AI Document Analysis Demo</h3>
+                <p>Upload documents for automated data extraction and AI-powered analysis</p>
+                <div class="upload-zone" id="uploadZone">
+                    <p>📄 Click to upload document or drag & drop</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">Supports PDF, PNG, JPG, DOCX</p>
+                    <input type="file" id="documentUpload" accept="image/*,.pdf,.docx" style="display: none;">
+                </div>
+                <div class="progress-bar" id="analysisProgress" style="display: none;">
+                    <div class="progress-fill" id="analysisProgressFill"></div>
+                </div>
+                <div id="analysisResults" style="margin-top: 1rem;"></div>
+            </div>
+            
+            <!-- Git Workflow Demo -->
+            <div class="demo-container">
+                <h3>Git DevOps Workflow Demo</h3>
+                <p>Interactive visualization of Git-based development workflow for BI projects</p>
+                <div style="display: flex; justify-content: space-around; align-items: center; margin: 2rem 0; flex-wrap: wrap; gap: 1rem;">
+                    <div class="git-stage" data-stage="dev">
+                        <h4>🔧 Development</h4>
+                        <p>Feature Branch</p>
+                        <div class="stage-status">
+                            <span>1</span>
+                        </div>
+                    </div>
+                    <div style="color: var(--primary-color); font-size: 1.5rem;">→</div>
+                    <div class="git-stage" data-stage="deploy">
+                        <h4>🚀 Production</h4>
+                        <p>Auto Deploy</p>
+                        <div class="stage-status">
+                            <span>3</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h4>Git Commands</h4>
+                        <div id="gitCommands" class="console">
+                            <span style="color: var(--accent-color);">$ </span>Ready to simulate workflow...
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Pipeline Status</h4>
+                        <div id="pipelineStatus" class="console">
+                            <div style="color: var(--text-muted);">No active pipelines</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="api-button" onclick="simulateGitWorkflow()">▶️ Simulate Workflow</button>
+            </div>
+            
+            <!-- Data Visualization -->
+            <div class="demo-container">
+                <h3>Interactive BI Performance Metrics</h3>
+                <div class="chart-container">
+                    <svg width="100%" height="300" id="performanceChart"></svg>
+                </div>
+                <button class="api-button" onclick="updateChart()">🔄 Update Metrics</button>
+            </div>
+            
+            <!-- LLM API Demo -->
+            <div class="demo-container">
+                <h3>AI Assistant Demo</h3>
+                <div class="api-demo">
+                    <div class="api-input">
+                        <h4>💬 Ask AI Assistant</h4>
+                        <textarea id="llmPrompt" placeholder="Ask about Microsoft Fabric, ESG analytics, or BI best practices...">How can Microsoft Fabric improve industrial ESG reporting workflows?</textarea>
+                        <button class="api-button" onclick="callLLM()">🤖 Get AI Response</button>
+                    </div>
+                    <div class="api-output">
+                        <h4>🎯 AI Response</h4>
+                        <div id="llmResponse" class="console">
+                            Click "Get AI Response" to see intelligent analysis...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="resume-grid">
+                <div class="resume-section">
+                    <h3>Business Intelligence Intern</h3>
+                    <p><strong>Pure Industrial</strong> | 2023 - 2024</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Built Power BI dashboards tracking operational KPIs and cost metrics</li>
+                        <li>Developed automated ETL pipelines using Microsoft Fabric and Data Factory</li>
+                        <li>Implemented Git workflows for version control of BI reports and data models</li>
+                        <li>Created DAX calculations for complex business logic and KPI measurements</li>
+                    </ul>
+                </div>
+                <div class="resume-section">
+                    <h3>ESG Analytics Intern</h3>
+                    <p><strong>Pure Industrial</strong> | 2023 - 2024</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Designed comprehensive ESG reporting framework and sustainability dashboards</li>
+                        <li>Automated carbon footprint calculations and environmental impact tracking</li>
+                        <li>Integrated multiple data sources for ESG compliance and regulatory reporting</li>
+                        <li>Collaborated with DevOps teams to implement CI/CD for analytics workflows</li>
+                    </ul>
+                </div>
+                <div class="resume-section">
+                    <h3>Technical Skills</h3>
+                    <p><strong>Core Technologies</strong></p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li><strong>Microsoft Stack:</strong> Fabric, Power BI, Data Factory, Synapse Analytics</li>
+                        <li><strong>DevOps:</strong> Git, Azure DevOps, CI/CD pipelines, Infrastructure as Code</li>
+                        <li><strong>Programming:</strong> Python, SQL, DAX, Power Query, R</li>
+                        <li><strong>Cloud:</strong> Azure, AWS, Docker, Kubernetes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Skills Progress Bars -->
+            <div style="margin-top: 3rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary-color);">Skill Proficiency</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="skill-progress-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Microsoft Fabric/Power BI</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill skill-progress" data-width="92"></div>
+                        </div>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>ESG Analytics</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill skill-progress" data-width="88"></div>
+                        </div>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>DevOps & Git</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill skill-progress" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-progress-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Data Engineering</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill skill-progress" data-width="90"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog">
+        <div class="container">
+            <h2 class="section-title">Technical Articles</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">Jan 12, 2025 • 7 min read</div>
+                        <h3>Building ESG Dashboards with Microsoft Fabric</h3>
+                        <p>A comprehensive guide to creating automated sustainability reporting using Power BI, Data Factory, and modern DevOps practices.</p>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">Dec 18, 2024 • 5 min read</div>
+                        <h3>Git Workflows for BI Development Teams</h3>
+                        <p>Best practices for version control in Power BI development, including branching strategies and CI/CD for analytics.</p>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-content">
+                        <div class="blog-meta">Nov 25, 2024 • 9 min read</div>
+                        <h3>Industrial Data Analytics: From ETL to Insights</h3>
+                        <p>Lessons learned from building real-time analytics pipelines for industrial operations at Pure Industrial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-muted);">
+                    Ready to discuss data analytics, ESG reporting, or Microsoft Fabric projects? Let's connect!
+                </p>
+                <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="mailto:abishec.selvarajah@email.com" class="cta-button" style="text-decoration: none;">
+                        📧 Email Me
+                    </a>
+                    <a href="https://linkedin.com/in/abishecselvarajah" class="cta-button" style="background: var(--gradient-2); text-decoration: none;">
+                        💼 LinkedIn
+                    </a>
+                    <a href="https://github.com/abishecselvarajah" class="cta-button" style="background: var(--gradient-3); text-decoration: none;">
+                        🔗 GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(139, 92, 246, 0.2);">
+            <p style="color: var(--text-muted);">&copy; 2025 Abishec Selvarajah. All rights reserved.</p>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Navigation
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu after clicking
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(15, 15, 35, 0.98)';
+                navbar.style.boxShadow = '0 4px 20px rgba(139, 92, 246, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Microsoft Fabric Pipeline Demo
         function runFabricPipeline() {
             const logs = document.getElementById('fabricLogs');
-            const dataSource = document.querySelector('#dataSource1 div');
-            const dataFactory = document.querySelector('#dataFactory div');
-            const powerBI = document.querySelector('#powerBI div');
+            const dataSource = document.querySelector('#dataSource1 .progress-fill');
+            const dataFactory = document.querySelector('#dataFactory .progress-fill');
+            const powerBI = document.querySelector('#powerBI .progress-fill');
             
             logs.innerHTML = '';
             dataSource.style.width = '0%';
@@ -23,7 +1053,7 @@
             stages.forEach(stage => {
                 setTimeout(() => {
                     stage.element.style.width = stage.width;
-                    logs.innerHTML += stage.log + '<br>';
+                    logs.innerHTML += '<div style="color: var(--accent-color);">' + stage.log + '</div>';
                     logs.scrollTop = logs.scrollHeight;
                 }, stage.delay);
             });
@@ -35,10 +1065,13 @@
             const energyMetric = document.getElementById('energyMetric');
             const esgMetric = document.getElementById('esgMetric');
             
+            // Add loading animation
+            [carbonMetric, energyMetric, esgMetric].forEach(el => el.classList.add('loading'));
+            
             // Animate counter updates
             const updateCounter = (element, target, suffix = '') => {
                 const start = parseFloat(element.textContent);
-                const increment = (target - start) / 20;
+                const increment = (target - start) / 30;
                 let current = start;
                 
                 const timer = setInterval(() => {
@@ -53,111 +1086,126 @@
                     
                     if (Math.abs(current - target) < Math.abs(increment)) {
                         element.textContent = target + suffix;
+                        element.classList.remove('loading');
                         clearInterval(timer);
                     }
                 }, 50);
             };
             
-            updateCounter(carbonMetric, Math.random() * 0.5 + 2.0, 'k');
-            updateCounter(energyMetric, Math.random() * 10 + 85, '%');
-            updateCounter(esgMetric, Math.random() * 1.5 + 8.0);
+            setTimeout(() => {
+                updateCounter(carbonMetric, Math.random() * 0.5 + 2.0, 'k');
+                updateCounter(energyMetric, Math.random() * 10 + 85, '%');
+                updateCounter(esgMetric, Math.random() * 1.5 + 8.0);
+            }, 500);
         }
 
         // Enhanced Document Processing Demo
-        function processDocument(input) {
-            const file = input.files[0];
-            if (!file) return;
+        function initDocumentUpload() {
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('documentUpload');
+            const progress = document.getElementById('analysisProgress');
+            const progressFill = document.getElementById('analysisProgressFill');
+            const results = document.getElementById('analysisResults');
 
-            const progress = document.getElementById('ocrProgress');
-            const progressFill = document.getElementById('ocrProgressFill');
-            const results = document.getElementById('ocrResults');
-            
-            progress.style.display = 'block';
-            results.innerHTML = '';
-            
-            // Simulate document processing
-            let width = 0;
-            const interval = setInterval(() => {
-                width += Math.random() * 15 + 5;
-                progressFill.style.width = Math.min(width, 100) + '%';
-                
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        progress.style.display = 'none';
-                        results.innerHTML = `
-                            <h4>Document Analysis Complete:</h4>
-                            <div style="background: rgba(15, 15, 35, 0.5); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                                <p><strong>Document Type:</strong> ESG Sustainability Report</p>
-                                <p><strong>Confidence:</strong> 96.8%</p>
-                                <p><strong>Key Metrics Extracted:</strong></p>
-                                <ul style="margin-left: 1rem;">
-                                    <li>Carbon Emissions: 2,145 tonnes CO2e</li>
-                                    <li>Energy Consumption: 15.2 GWh</li>
-                                    <li>Waste Reduction: 23% improvement</li>
-                                    <li>ESG Compliance Score: 8.4/10</li>
-                                </ul>
-                                <p><strong>Processing Time:</strong> 1.8s</p>
-                                <p><strong>Next Steps:</strong> Data automatically synced to Power BI dashboard</p>
-                            </div>
-                        `;
-                    }, 500);
+            // Click to upload
+            uploadZone.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Drag and drop functionality
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    processDocument(files[0]);
                 }
-            }, 100);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    processDocument(e.target.files[0]);
+                }
+            });
+
+            function processDocument(file) {
+                progress.style.display = 'block';
+                results.innerHTML = '';
+                progressFill.style.width = '0%';
+                
+                // Simulate document processing with realistic stages
+                const stages = [
+                    { width: 20, text: 'Uploading document...', delay: 300 },
+                    { width: 40, text: 'Running OCR analysis...', delay: 800 },
+                    { width: 60, text: 'Extracting key data points...', delay: 1200 },
+                    { width: 80, text: 'Applying AI analysis...', delay: 1600 },
+                    { width: 100, text: 'Generating insights...', delay: 2000 }
+                ];
+
+                stages.forEach(stage => {
+                    setTimeout(() => {
+                        progressFill.style.width = stage.width + '%';
+                        console.log(stage.text);
+                    }, stage.delay);
+                });
+
+                setTimeout(() => {
+                    progress.style.display = 'none';
+                    results.innerHTML = `
+                        <div style="background: rgba(26, 26, 46, 0.8); padding: 1.5rem; border-radius: 15px; border: 1px solid rgba(139, 92, 246, 0.3);">
+                            <h4 style="color: var(--primary-color); margin-bottom: 1rem;">📄 Document Analysis Complete</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <p><strong>Document Type:</strong> ${getDocumentType(file.name)}</p>
+                                    <p><strong>Confidence:</strong> <span style="color: var(--accent-color);">96.8%</span></p>
+                                    <p><strong>Processing Time:</strong> 2.1s</p>
+                                </div>
+                                <div>
+                                    <p><strong>File Size:</strong> ${(file.size / 1024).toFixed(1)} KB</p>
+                                    <p><strong>Pages Detected:</strong> ${Math.ceil(Math.random() * 5 + 1)}</p>
+                                    <p><strong>Status:</strong> <span style="color: #10b981;">✅ Success</span></p>
+                                </div>
+                            </div>
+                            <div style="background: rgba(15, 15, 35, 0.8); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <p><strong>🔍 Key Insights Extracted:</strong></p>
+                                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-muted);">
+                                    <li>Carbon Emissions: <span style="color: var(--accent-color);">2,145 tonnes CO2e</span></li>
+                                    <li>Energy Consumption: <span style="color: var(--accent-color);">15.2 GWh</span></li>
+                                    <li>Waste Reduction: <span style="color: #10b981;">23% improvement</span></li>
+                                    <li>ESG Compliance Score: <span style="color: var(--primary-color);">8.4/10</span></li>
+                                </ul>
+                                <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                                    💡 <strong>Next Steps:</strong> Data automatically synced to Power BI dashboard for further analysis
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }, 2500);
+            }
+
+            function getDocumentType(filename) {
+                const ext = filename.split('.').pop().toLowerCase();
+                const types = {
+                    'pdf': 'ESG Sustainability Report',
+                    'docx': 'Business Document',
+                    'png': 'Scanned Document',
+                    'jpg': 'Image Document',
+                    'jpeg': 'Image Document'
+                };
+                return types[ext] || 'Unknown Document';
+            }
         }
 
         // Git Workflow Visualization
-        function createGitWorkflowDemo() {
-            const gitDemo = document.createElement('div');
-            gitDemo.className = 'demo-container';
-            gitDemo.innerHTML = `
-                <h3>Git DevOps Workflow Demo</h3>
-                <p>Interactive visualization of Git-based development workflow for BI projects</p>
-                <div style="display: flex; justify-content: space-around; align-items: center; margin: 2rem 0; flex-wrap: wrap; gap: 1rem;">
-                    <div class="git-stage" data-stage="dev" style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
-                        <h4>🔧 Development</h4>
-                        <p>Feature Branch</p>
-                        <div class="stage-status" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(99, 102, 241, 0.3); margin: 0.5rem auto; display: flex; align-items: center; justify-content: center;">
-                            <span>1</span>
-                        </div>
-                    </div>
-                    <div style="color: var(--primary-color); font-size: 1.5rem;">→</div>
-                    <div class="git-stage" data-stage="test" style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
-                        <h4>🧪 Testing</h4>
-                        <p>PR Review</p>
-                        <div class="stage-status" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(139, 92, 246, 0.3); margin: 0.5rem auto; display: flex; align-items: center; justify-content: center;">
-                            <span>2</span>
-                        </div>
-                    </div>
-                    <div style="color: var(--primary-color); font-size: 1.5rem;">→</div>
-                    <div class="git-stage" data-stage="deploy" style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
-                        <h4>🚀 Production</h4>
-                        <p>Auto Deploy</p>
-                        <div class="stage-status" style="width: 50px; height: 50px; border-radius: 50%; background: rgba(6, 214, 160, 0.3); margin: 0.5rem auto; display: flex; align-items: center; justify-content: center;">
-                            <span>3</span>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
-                    <div>
-                        <h4>Git Commands</h4>
-                        <div id="gitCommands" style="background: rgba(15, 15, 35, 0.8); padding: 1rem; border-radius: 10px; font-family: monospace; font-size: 0.9rem; height: 150px; overflow-y: auto;">
-                            <span style="color: var(--accent-color);">$ </span>Ready to simulate workflow...
-                        </div>
-                    </div>
-                    <div>
-                        <h4>Pipeline Status</h4>
-                        <div id="pipelineStatus" style="background: rgba(15, 15, 35, 0.8); padding: 1rem; border-radius: 10px; height: 150px; overflow-y: auto;">
-                            <div style="color: var(--text-muted);">No active pipelines</div>
-                        </div>
-                    </div>
-                </div>
-                <button class="api-button" onclick="simulateGitWorkflow()" style="margin-top: 1rem;">▶️ Simulate Workflow</button>
-            `;
-            
-            document.querySelector('#demos .container').appendChild(gitDemo);
-        }
-
         function simulateGitWorkflow() {
             const commands = document.getElementById('gitCommands');
             const status = document.getElementById('pipelineStatus');
@@ -168,8 +1216,7 @@
             
             // Reset stages
             stages.forEach(stage => {
-                stage.style.background = 'var(--dark-bg)';
-                stage.style.borderLeft = 'none';
+                stage.classList.remove('active');
             });
             
             const workflow = [
@@ -231,92 +1278,149 @@
             
             workflow.forEach(step => {
                 setTimeout(() => {
-                    commands.innerHTML += `<span style="color: var(--accent-color);">${step.command}</span><br>`;
+                    commands.innerHTML += `<div><span style="color: var(--accent-color);">${step.command}</span></div>`;
                     commands.scrollTop = commands.scrollHeight;
                     
-                    status.innerHTML += `<div style="margin-bottom: 0.5rem;">${step.status}</div>`;
+                    status.innerHTML += `<div style="margin-bottom: 0.5rem; color: var(--text-muted);">${step.status}</div>`;
                     status.scrollTop = status.scrollHeight;
                     
                     // Highlight current stage
                     stages.forEach((stage, index) => {
+                        stage.classList.remove('active');
                         if (index === step.stage) {
-                            stage.style.background = 'rgba(99, 102, 241, 0.2)';
-                            stage.style.borderLeft = '4px solid var(--primary-color)';
+                            stage.classList.add('active');
                         }
                     });
                 }, step.delay);
             });
         }
 
-        // Update LLM Demo for BI context
+        // Enhanced LLM Demo
         function callLLM() {
-            const prompt = document.getElementById('llmPrompt').value;
+            const prompt = document.getElementById('llmPrompt').value.trim();
             const response = document.getElementById('llmResponse');
             
-            response.innerHTML = '<div style="color: #8b5cf6;">🤔 Analyzing query...</div>';
+            if (!prompt) {
+                response.innerHTML = '<div style="color: #ef4444;">Please enter a question first!</div>';
+                return;
+            }
+            
+            response.innerHTML = '<div style="color: var(--primary-color); animation: glow 1.5s infinite;">🤖 AI is thinking...</div>';
             
             setTimeout(() => {
+                let aiResponse = '';
+                
                 if (prompt.toLowerCase().includes('fabric') || prompt.toLowerCase().includes('power bi')) {
-                    response.innerHTML = `
-                        <p><strong>Microsoft Fabric Analysis:</strong></p>
-                        <p>• <strong>Data Factory:</strong> ETL pipelines for data transformation</p>
-                        <p>• <strong>Power BI:</strong> Interactive dashboards and reports</p>
-                        <p>• <strong>Synapse Analytics:</strong> Data warehousing and big data processing</p>
-                        <br>
-                        <p><strong>Best Practices:</strong></p>
-                        <p>• Use Git for version control of Power BI reports</p>
-                        <p>• Implement CI/CD pipelines for automated deployment</p>
-                        <p>• Monitor data quality and pipeline performance</p>
-                        <br>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">Based on practical experience at Pure Industrial</p>
+                    aiResponse = `
+                        <div style="color: var(--accent-color); font-weight: bold; margin-bottom: 1rem;">🚀 Microsoft Fabric Analysis</div>
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <p><strong>🏗️ Data Factory:</strong> Streamlines ETL pipelines with visual drag-and-drop interface</p>
+                            <p><strong>📊 Power BI:</strong> Creates interactive dashboards with real-time ESG metrics</p>
+                            <p><strong>⚡ Synapse Analytics:</strong> Processes large ESG datasets with enterprise-scale performance</p>
+                        </div>
+                        <div style="color: var(--text-muted); margin-bottom: 1rem;">
+                            <strong>🎯 Best Practices for ESG Reporting:</strong><br>
+                            • Implement Git version control for all Power BI reports<br>
+                            • Set up automated CI/CD pipelines for deployment<br>
+                            • Use dataflows for consistent data transformations<br>
+                            • Monitor data quality with built-in governance tools
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--primary-color); font-style: italic;">
+                            ✨ Based on practical experience at Pure Industrial
+                        </div>
                     `;
                 } else if (prompt.toLowerCase().includes('esg') || prompt.toLowerCase().includes('sustainability')) {
-                    response.innerHTML = `
-                        <p><strong>ESG Analytics Framework:</strong></p>
-                        <p>• <strong>Environmental:</strong> Carbon footprint, energy efficiency, waste metrics</p>
-                        <p>• <strong>Social:</strong> Employee satisfaction, community impact, diversity</p>
-                        <p>• <strong>Governance:</strong> Compliance scores, risk management, transparency</p>
-                        <br>
-                        <p><strong>Key Metrics to Track:</strong></p>
-                        <p>• CO2 emissions per unit of production</p>
-                        <p>• Energy consumption trends</p>
-                        <p>• Regulatory compliance scores</p>
-                        <br>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">Insights from industrial ESG reporting experience</p>
+                    aiResponse = `
+                        <div style="color: var(--accent-color); font-weight: bold; margin-bottom: 1rem;">🌱 ESG Analytics Framework</div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                            <div style="background: rgba(139, 92, 246, 0.1); padding: 1rem; border-radius: 10px;">
+                                <strong>🌍 Environmental</strong><br>
+                                Carbon footprint, energy efficiency, waste metrics
+                            </div>
+                            <div style="background: rgba(168, 85, 247, 0.1); padding: 1rem; border-radius: 10px;">
+                                <strong>👥 Social</strong><br>
+                                Employee satisfaction, diversity, community impact
+                            </div>
+                            <div style="background: rgba(192, 132, 252, 0.1); padding: 1rem; border-radius: 10px;">
+                                <strong>⚖️ Governance</strong><br>
+                                Compliance scores, risk management, transparency
+                            </div>
+                        </div>
+                        <div style="color: var(--text-muted);">
+                            <strong>📈 Key Performance Indicators:</strong><br>
+                            • CO2 emissions per unit of production<br>
+                            • Energy consumption trends and efficiency ratios<br>
+                            • Regulatory compliance scores and audit results<br>
+                            • Waste reduction and circular economy metrics
+                        </div>
                     `;
                 } else {
-                    response.innerHTML = `
-                        <p><strong>Business Intelligence Insights:</strong></p>
-                        <p>• Focus on actionable KPIs that drive business decisions</p>
-                        <p>• Ensure data quality through automated validation</p>
-                        <p>• Design dashboards with end-user experience in mind</p>
-                        <br>
-                        <p><strong>DevOps for BI:</strong></p>
-                        <p>• Version control all reports and data models</p>
-                        <p>• Implement automated testing for data pipelines</p>
-                        <p>• Use infrastructure as code for deployment consistency</p>
-                        <br>
-                        <p style="color: #94a3b8; font-size: 0.9rem;">Practical advice from BI development experience</p>
+                    aiResponse = `
+                        <div style="color: var(--accent-color); font-weight: bold; margin-bottom: 1rem;">💡 Business Intelligence Insights</div>
+                        <div style="background: rgba(139, 92, 246, 0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                            <p><strong>🎯 Focus Areas:</strong></p>
+                            <p>• Design actionable KPIs that drive business decisions</p>
+                            <p>• Implement automated data quality validation processes</p>
+                            <p>• Create user-centric dashboards with intuitive navigation</p>
+                        </div>
+                        <div style="color: var(--text-muted);">
+                            <strong>🔄 DevOps for BI Excellence:</strong><br>
+                            • Version control all reports and data models in Git<br>
+                            • Implement automated testing for data pipeline integrity<br>
+                            • Use Infrastructure as Code for consistent deployments<br>
+                            • Monitor performance metrics and user adoption rates
+                        </div>
                     `;
                 }
-            }, 2000);
+                
+                response.innerHTML = aiResponse;
+            }, 2000 + Math.random() * 1000); // Add some randomness to simulate real API calls
         }
 
-        // Update chart data to show BI metrics
+        // Enhanced Chart Visualization
         function createChart() {
             const svg = document.getElementById('performanceChart');
             const data = [
-                { name: 'Data Quality', value: 98.5 },
-                { name: 'Dashboard Performance', value: 94.2 },
-                { name: 'User Adoption', value: 87.3 },
-                { name: 'Pipeline Reliability', value: 99.1 }
+                { name: 'Data Quality', value: 98.5, color: '#8b5cf6' },
+                { name: 'Dashboard Performance', value: 94.2, color: '#a855f7' },
+                { name: 'User Adoption', value: 87.3, color: '#c084fc' },
+                { name: 'Pipeline Reliability', value: 99.1, color: '#d8b4fe' }
             ];
             
-            const width = svg.clientWidth;
+            const containerWidth = svg.parentElement.clientWidth;
+            const width = Math.min(containerWidth, 800);
             const height = 300;
-            const margin = { top: 20, right: 30, bottom: 40, left: 60 };
+            const margin = { top: 20, right: 30, bottom: 60, left: 60 };
             
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
             svg.innerHTML = '';
+            
+            // Create gradient definitions
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            data.forEach((d, i) => {
+                const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+                gradient.setAttribute('id', `gradient${i}`);
+                gradient.setAttribute('x1', '0%');
+                gradient.setAttribute('y1', '0%');
+                gradient.setAttribute('x2', '0%');
+                gradient.setAttribute('y2', '100%');
+                
+                const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+                stop1.setAttribute('offset', '0%');
+                stop1.setAttribute('stop-color', d.color);
+                stop1.setAttribute('stop-opacity', '0.8');
+                
+                const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+                stop2.setAttribute('offset', '100%');
+                stop2.setAttribute('stop-color', d.color);
+                stop2.setAttribute('stop-opacity', '0.3');
+                
+                gradient.appendChild(stop1);
+                gradient.appendChild(stop2);
+                defs.appendChild(gradient);
+            });
+            svg.appendChild(defs);
             
             data.forEach((d, i) => {
                 const barHeight = (d.value / 100) * (height - margin.top - margin.bottom);
@@ -324,13 +1428,17 @@
                 const y = height - margin.bottom - barHeight;
                 const barWidth = (width - margin.left - margin.right) / data.length - 40;
                 
-                // Bar
+                // Bar with gradient
                 const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                 rect.setAttribute('x', x);
                 rect.setAttribute('y', y);
                 rect.setAttribute('width', barWidth);
                 rect.setAttribute('height', barHeight);
+                rect.setAttribute('fill', `url(#gradient${i})`);
                 rect.setAttribute('class', 'bar');
+                rect.setAttribute('rx', '4');
+                rect.setAttribute('ry', '4');
+                rect.style.cursor = 'pointer';
                 svg.appendChild(rect);
                 
                 // Label
@@ -339,28 +1447,40 @@
                 text.setAttribute('y', height - margin.bottom + 20);
                 text.setAttribute('text-anchor', 'middle');
                 text.setAttribute('fill', '#e2e8f0');
+                text.setAttribute('font-size', '12');
                 text.textContent = d.name;
                 svg.appendChild(text);
                 
                 // Value
                 const value = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 value.setAttribute('x', x + barWidth / 2);
-                value.setAttribute('y', y - 5);
+                value.setAttribute('y', y - 8);
                 value.setAttribute('text-anchor', 'middle');
                 value.setAttribute('fill', '#e2e8f0');
-                value.setAttribute('font-size', '12');
+                value.setAttribute('font-size', '14');
+                value.setAttribute('font-weight', 'bold');
                 value.textContent = d.value + '%';
                 svg.appendChild(value);
+                
+                // Add hover effects
+                rect.addEventListener('mouseenter', () => {
+                    rect.setAttribute('fill', d.color);
+                    rect.style.filter = 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.6))';
+                });
+                
+                rect.addEventListener('mouseleave', () => {
+                    rect.setAttribute('fill', `url(#gradient${i})`);
+                    rect.style.filter = 'none';
+                });
             });
         }
 
         function updateChart() {
-            // Simulate new BI performance data
             const data = [
-                { name: 'Data Quality', value: Math.random() * 5 + 95 },
-                { name: 'Dashboard Performance', value: Math.random() * 8 + 90 },
-                { name: 'User Adoption', value: Math.random() * 10 + 85 },
-                { name: 'Pipeline Reliability', value: Math.random() * 3 + 97 }
+                { name: 'Data Quality', value: Math.random() * 5 + 95, color: '#8b5cf6' },
+                { name: 'Dashboard Performance', value: Math.random() * 8 + 90, color: '#a855f7' },
+                { name: 'User Adoption', value: Math.random() * 10 + 85, color: '#c084fc' },
+                { name: 'Pipeline Reliability', value: Math.random() * 3 + 97, color: '#d8b4fe' }
             ];
             
             const svg = document.getElementById('performanceChart');
@@ -370,977 +1490,37 @@
             data.forEach((d, i) => {
                 if (bars[i]) {
                     const height = 300;
-                    const margin = { top: 20, right: 30, bottom: 40, left: 60 };
+                    const margin = { top: 20, right: 30, bottom: 60, left: 60 };
                     const barHeight = (d.value / 100) * (height - margin.top - margin.bottom);
                     const y = height - margin.bottom - barHeight;
                     
+                    // Animate bar height change
+                    bars[i].style.transition = 'height 0.8s ease, y 0.8s ease';
                     bars[i].setAttribute('y', y);
                     bars[i].setAttribute('height', barHeight);
                 }
                 
-                // Update value text (every other text element is a value)
-                if (values[i * 2 + 1]) {
-                    values[i * 2 + 1].textContent = d.value.toFixed(1) + '%';
+                // Update value text (find the corresponding value text)
+                const valueTexts = Array.from(values).filter(text => 
+                    text.textContent.includes('%') && 
+                    parseFloat(text.textContent) > 0
+                );
+                if (valueTexts[i]) {
+                    valueTexts[i].textContent = d.value.toFixed(1) + '%';
                 }
             });
         }
 
-        // Update skills progress for BI context
-        function animateProgressBars() {
-            const skills = [
-                { name: 'Microsoft Fabric/Power BI', level: 92 },
-                { name: 'ESG Analytics', level: 88 },
-                { name: 'DevOps & Git', level: 85 },
-                { name: 'Data Engineering', level: 90 }
-            ];
-            
-            const skillsSection = document.getElementById('skills');
-            const progressContainer = document.createElement('div');
-            progressContainer.className = 'skills-progress';
-            progressContainer.style.marginTop = '3rem';
-            
-            skills.forEach(skill => {
-                const skillDiv = document.createElement('div');
-                skillDiv.style.marginBottom = '1.5rem';
-                
-                skillDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>${skill.name}</span>
-                        <span>${skill.level}%</span>
-                    </div>
-                    <div style="width: 100%; height: 8px; background: rgba(99, 102, 241, 0.2); border-radius: 4px; overflow: hidden;">
-                        <div class="skill-progress" style="height: 100%; background: var(--gradient-1); width: 0%; transition: width 2s ease;"></div>
-                    </div>
-                `;
-                
-                progressContainer.appendChild(skillDiv);
-            });
-            
-            skillsSection.querySelector('.container').appendChild(progressContainer);
-            
-            // Animate progress bars when they come into view
-            const progressObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const progressBars = entry.target.querySelectorAll('.skill-progress');
-                        progressBars.forEach((bar, index) => {
-                            setTimeout(() => {
-                                bar.style.width = skills[index].level + '%';
-                            }, index * 200);
-                        });
-                    }
-                });
-            });
-            
-            progressObserver.observe(progressContainer);
-        }
-
-        // Update contact information
-        const contactSection = document.createElement('section');
-        contactSection.id = 'contact';
-        contactSection.innerHTML = `
-            <div class="container">
-                <h2 class="section-title">Get In Touch</h2>
-                <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-muted);">
-                        Ready to discuss data analytics, ESG reporting, or Microsoft Fabric projects? Let's connect!
-                    </p>
-                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="mailto:abishec.selvarajah@email.com" class="cta-button" style="text-decoration: none;">
-                            📧 Email Me
-                        </a>
-                        <a href="https://linkedin.com/in/abishecselvarajah" class="cta-button" style="background: var(--gradient-2); text-decoration: none;">
-                            💼 LinkedIn
-                        </a>
-                        <a href="https://github.com/abishecselvarajah" class="cta-button" style="background: var(--gradient-3); text-decoration: none;">
-                            🔗 GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.2);">
-                <p style="color: var(--text-muted);">&copy; 2025 Abishec Selvarajah. All rights reserved.</p>
-            </div>
-        `;
-        
-        document.body.appendChild(contactSection);
-
-        // Add contact to navigation
-        const contactNav = document.createElement('li');
-        contactNav.innerHTML = '<a href="#contact">Contact</a>';
-        document.querySelector('.nav-links').appendChild(contactNav);
-
-        // Initialize all new features
-        window.addEventListener('load', () => {
-            createGitWorkflowDemo();
-            
-            // Update default LLM prompt
-            document.getElementById('llmPrompt').value = "How can Microsoft Fabric improve industrial ESG reporting workflows?";
-        });
-                <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abishec Selvarajah - Data Scientist/ML Engineer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #06d6a0;
-            --dark-bg: #0f0f23;
-            --dark-card: #1a1a2e;
-            --text-light: #e2e8f0;
-            --text-muted: #94a3b8;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 15, 35, 0.9);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-1);
-            opacity: 0.1;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        .hero-content {
-            z-index: 2;
-            max-width: 600px;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-        
-        .cta-button {
-            background: var(--gradient-1);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-        }
-        
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: var(--gradient-2);
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .floating-element:nth-child(1) { top: 20%; right: 10%; animation-delay: 0s; }
-        .floating-element:nth-child(2) { top: 60%; right: 20%; animation-delay: 2s; }
-        .floating-element:nth-child(3) { top: 80%; right: 5%; animation-delay: 4s; }
-        
-        /* Section Styles */
-        section {
-            padding: 5rem 0;
-            position: relative;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .skill-card {
-            background: var(--dark-card);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
-        }
-        
-        .skill-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-        
-        .project-card {
-            background: var(--dark-card);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .project-header {
-            padding: 1.5rem;
-            background: var(--gradient-1);
-        }
-        
-        .project-content {
-            padding: 2rem;
-        }
-        
-        /* Interactive Demo */
-        .demo-container {
-            background: var(--dark-card);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-        }
-        
-        .chart-container {
-            height: 300px;
-            position: relative;
-            margin: 1rem 0;
-        }
-        
-        /* API Demo */
-        .api-demo {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .api-input, .api-output {
-            background: var(--dark-card);
-            border-radius: 15px;
-            padding: 1.5rem;
-        }
-        
-        .api-input textarea {
-            width: 100%;
-            height: 120px;
-            background: rgba(15, 15, 35, 0.5);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 10px;
-            color: var(--text-light);
-            padding: 1rem;
-            resize: none;
-        }
-        
-        .api-button {
-            background: var(--gradient-2);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 1rem;
-            transition: transform 0.2s ease;
-        }
-        
-        .api-button:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Resume Section */
-        .resume-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .resume-section {
-            background: var(--dark-card);
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        /* Blog Section */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        
-        .blog-card {
-            background: var(--dark-card);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .blog-content {
-            padding: 1.5rem;
-        }
-        
-        .blog-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { opacity: 0.1; }
-            50% { opacity: 0.2; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .api-demo { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
-        
-        /* Data Visualization Styles */
-        .viz-container {
-            background: var(--dark-card);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .bar {
-            fill: var(--primary-color);
-            transition: fill 0.3s ease;
-        }
-        
-        .bar:hover {
-            fill: var(--accent-color);
-        }
-        
-        /* OCR Demo Styles */
-        .ocr-demo {
-            background: var(--dark-card);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        .upload-zone {
-            border: 2px dashed var(--primary-color);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 1rem 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-zone:hover {
-            background: rgba(99, 102, 241, 0.1);
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container nav-container">
-            <div class="logo">Abishec Selvarajah</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#demos">Demos</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#blog">Blog</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        
-        <div class="container">
-            <div class="hero-content fade-in-up">
-                <h1>Data Scientist & BI Analyst</h1>
-                <p class="hero-subtitle">Transforming business data into actionable insights with Microsoft Fabric, ESG analytics, and modern DevOps practices</p>
-                <a href="#projects" class="cta-button">Explore My Work</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Core Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">📊</div>
-                    <h3>Microsoft Fabric & BI</h3>
-                    <p>Power BI, Data Factory, Synapse Analytics, DAX, Power Query, Real-time analytics, Data warehousing</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🌱</div>
-                    <h3>ESG & Sustainability Analytics</h3>
-                    <p>Environmental data analysis, Sustainability reporting, Carbon footprint modeling, ESG KPIs, Regulatory compliance</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🔄</div>
-                    <h3>DevOps & Version Control</h3>
-                    <p>Git workflows, Azure DevOps, CI/CD pipelines, Infrastructure as Code, Automated testing, Deployment strategies</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">⚡</div>
-                    <h3>Data Engineering</h3>
-                    <p>Python, SQL, ETL pipelines, Apache Spark, Data modeling, API development, Cloud platforms</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>ESG Analytics Dashboard</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Built comprehensive ESG reporting system for Pure Industrial using Microsoft Fabric and Power BI. Automated carbon footprint calculations and sustainability KPI tracking across facilities.</p>
-                        <div style="margin: 1rem 0;">
-                            <span style="background: rgba(99, 102, 241, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Power BI</span>
-                            <span style="background: rgba(139, 92, 246, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Microsoft Fabric</span>
-                            <span style="background: rgba(6, 214, 160, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">DAX</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Fabric Data Pipeline</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Designed automated ETL pipelines in Microsoft Fabric connecting multiple data sources. Implemented real-time data processing for business intelligence reporting with Git-based version control.</p>
-                        <div style="margin: 1rem 0;">
-                            <span style="background: rgba(99, 102, 241, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Data Factory</span>
-                            <span style="background: rgba(139, 92, 246, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Synapse Analytics</span>
-                            <span style="background: rgba(6, 214, 160, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Azure DevOps</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Industrial BI Analytics</h3>
-                    </div>
-                    <div class="project-content">
-                        <p>Developed interactive business intelligence dashboards tracking operational KPIs, cost optimization, and performance metrics using advanced DAX calculations and data modeling.</p>
-                        <div style="margin: 1rem 0;">
-                            <span style="background: rgba(99, 102, 241, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Power Query</span>
-                            <span style="background: rgba(139, 92, 246, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Python</span>
-                            <span style="background: rgba(6, 214, 160, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Git</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Demos Section -->
-    <section id="demos">
-        <div class="container">
-            <h2 class="section-title">Live Demos</h2>
-            
-            <!-- Fabric Integration Demo -->
-            <div class="demo-container">
-                <h3>Microsoft Fabric Pipeline Demo</h3>
-                <p>Interactive simulation of data processing pipeline in Microsoft Fabric</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0;">
-                    <div style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; border: 2px solid rgba(99, 102, 241, 0.3);">
-                        <h4>📊 Data Sources</h4>
-                        <div id="dataSource1" style="height: 20px; background: rgba(99, 102, 241, 0.3); border-radius: 10px; margin: 0.5rem 0;">
-                            <div style="height: 100%; background: var(--gradient-1); width: 0%; border-radius: 10px; transition: width 2s ease;"></div>
-                        </div>
-                        <small>SQL Database</small>
-                    </div>
-                    <div style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; border: 2px solid rgba(139, 92, 246, 0.3);">
-                        <h4>⚙️ Data Factory</h4>
-                        <div id="dataFactory" style="height: 20px; background: rgba(139, 92, 246, 0.3); border-radius: 10px; margin: 0.5rem 0;">
-                            <div style="height: 100%; background: var(--gradient-2); width: 0%; border-radius: 10px; transition: width 2s ease;"></div>
-                        </div>
-                        <small>ETL Processing</small>
-                    </div>
-                    <div style="background: var(--dark-bg); padding: 1rem; border-radius: 10px; text-align: center; border: 2px solid rgba(6, 214, 160, 0.3);">
-                        <h4>📈 Power BI</h4>
-                        <div id="powerBI" style="height: 20px; background: rgba(6, 214, 160, 0.3); border-radius: 10px; margin: 0.5rem 0;">
-                            <div style="height: 100%; background: var(--gradient-3); width: 0%; border-radius: 10px; transition: width 2s ease;"></div>
-                        </div>
-                        <small>Visualization</small>
-                    </div>
-                </div>
-                <button class="api-button" onclick="runFabricPipeline()">▶️ Run Pipeline</button>
-                <div id="fabricLogs" style="background: rgba(15, 15, 35, 0.8); padding: 1rem; border-radius: 10px; margin-top: 1rem; height: 120px; overflow-y: auto; font-family: monospace; font-size: 0.9rem;"></div>
-            </div>
-            
-            <!-- ESG Metrics Dashboard -->
-            <div class="demo-container">
-                <h3>ESG Analytics Dashboard</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0;">
-                    <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 10px; text-align: center;">
-                        <h4 style="color: var(--accent-color);">Carbon Footprint</h4>
-                        <div style="font-size: 2rem; font-weight: bold;" id="carbonMetric">2.4k</div>
-                        <small>tonnes CO2e</small>
-                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↓ 12% vs last month</div>
-                    </div>
-                    <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 10px; text-align: center;">
-                        <h4 style="color: var(--primary-color);">Energy Efficiency</h4>
-                        <div style="font-size: 2rem; font-weight: bold;" id="energyMetric">89%</div>
-                        <small>efficiency score</small>
-                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↑ 5% improvement</div>
-                    </div>
-                    <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 10px; text-align: center;">
-                        <h4 style="color: var(--secondary-color);">ESG Score</h4>
-                        <div style="font-size: 2rem; font-weight: bold;" id="esgMetric">8.7</div>
-                        <small>out of 10</small>
-                        <div style="color: #10b981; font-size: 0.9rem; margin-top: 0.5rem;">↑ 0.3 points</div>
-                    </div>
-                </div>
-                <button class="api-button" onclick="updateESGMetrics()">🔄 Refresh Metrics</button>
-            </div>
-
-            <!-- OCR Demo -->
-            <div class="demo-container">
-                <h3>Document Analysis Demo</h3>
-                <p>Upload reports or documents for automated data extraction and analysis</p>
-                <div class="ocr-demo">
-                    <div class="upload-zone" onclick="document.getElementById('imageUpload').click()">
-                        <p>📄 Click to upload document or drag & drop</p>
-                        <input type="file" id="imageUpload" accept="image/*,.pdf" style="display: none;" onchange="processDocument(this)">
-                    </div>
-                    <div class="progress-bar" id="ocrProgress" style="display: none;">
-                        <div class="progress-fill" id="ocrProgressFill"></div>
-                    </div>
-                    <div id="ocrResults" style="margin-top: 1rem; text-align: left;"></div>
-                </div>
-            </div>
-            
-            <!-- Data Visualization -->
-            <div class="viz-container">
-                <h3>Interactive Model Performance</h3>
-                <div class="chart-container">
-                    <svg width="100%" height="300" id="performanceChart"></svg>
-                </div>
-                <button class="api-button" onclick="updateChart()">Update Metrics</button>
-            </div>
-            
-            <!-- LLM API Demo -->
-            <div class="demo-container">
-                <h3>LLM Integration Demo</h3>
-                <div class="api-demo">
-                    <div class="api-input">
-                        <h4>Input Prompt</h4>
-                        <textarea id="llmPrompt" placeholder="Enter your question about AI/ML...">What are the key differences between supervised and unsupervised learning?</textarea>
-                        <button class="api-button" onclick="callLLM()">Generate Response</button>
-                    </div>
-                    <div class="api-output">
-                        <h4>AI Response</h4>
-                        <div id="llmResponse" style="background: rgba(15, 15, 35, 0.5); padding: 1rem; border-radius: 10px; min-height: 120px;">
-                            Click "Generate Response" to see AI-powered answers...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Resume Section -->
-    <section id="resume">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="resume-grid">
-                <div class="resume-section">
-                    <h3>Business Intelligence Intern</h3>
-                    <p><strong>Pure Industrial</strong> | 2023 - 2024</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Built Power BI dashboards tracking operational KPIs and cost metrics</li>
-                        <li>Developed automated ETL pipelines using Microsoft Fabric and Data Factory</li>
-                        <li>Implemented Git workflows for version control of BI reports and data models</li>
-                        <li>Created DAX calculations for complex business logic and KPI measurements</li>
-                    </ul>
-                </div>
-                <div class="resume-section">
-                    <h3>ESG Analytics Intern</h3>
-                    <p><strong>Pure Industrial</strong> | 2023 - 2024</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Designed comprehensive ESG reporting framework and sustainability dashboards</li>
-                        <li>Automated carbon footprint calculations and environmental impact tracking</li>
-                        <li>Integrated multiple data sources for ESG compliance and regulatory reporting</li>
-                        <li>Collaborated with DevOps teams to implement CI/CD for analytics workflows</li>
-                    </ul>
-                </div>
-                <div class="resume-section">
-                    <h3>Technical Skills</h3>
-                    <p><strong>Core Technologies</strong></p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li><strong>Microsoft Stack:</strong> Fabric, Power BI, Data Factory, Synapse Analytics</li>
-                        <li><strong>DevOps:</strong> Git, Azure DevOps, CI/CD pipelines, Infrastructure as Code</li>
-                        <li><strong>Programming:</strong> Python, SQL, DAX, Power Query, R</li>
-                        <li><strong>Cloud:</strong> Azure, AWS, Docker, Kubernetes</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog">
-        <div class="container">
-            <h2 class="section-title">Technical Articles</h2>
-            <div class="blog-grid">
-                <div class="blog-card">
-                    <div class="blog-content">
-                        <div class="blog-meta">Jan 12, 2025 • 7 min read</div>
-                        <h3>Building ESG Dashboards with Microsoft Fabric</h3>
-                        <p>A comprehensive guide to creating automated sustainability reporting using Power BI, Data Factory, and modern DevOps practices.</p>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-content">
-                        <div class="blog-meta">Dec 18, 2024 • 5 min read</div>
-                        <h3>Git Workflows for BI Development Teams</h3>
-                        <p>Best practices for version control in Power BI development, including branching strategies and CI/CD for analytics.</p>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-content">
-                        <div class="blog-meta">Nov 25, 2024 • 9 min read</div>
-                        <h3>Industrial Data Analytics: From ETL to Insights</h3>
-                        <p>Lessons learned from building real-time analytics pipelines for industrial operations at Pure Industrial.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(15, 15, 35, 0.95)';
-            } else {
-                navbar.style.background = 'rgba(15, 15, 35, 0.9)';
-            }
-        });
-
-        // OCR Demo
-        function processOCR(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const progress = document.getElementById('ocrProgress');
-            const progressFill = document.getElementById('ocrProgressFill');
-            const results = document.getElementById('ocrResults');
-            
-            progress.style.display = 'block';
-            results.innerHTML = '';
-            
-            // Simulate OCR processing
-            let width = 0;
-            const interval = setInterval(() => {
-                width += Math.random() * 20;
-                progressFill.style.width = Math.min(width, 100) + '%';
-                
-                if (width >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        progress.style.display = 'none';
-                        results.innerHTML = `
-                            <h4>Extracted Text:</h4>
-                            <div style="background: rgba(15, 15, 35, 0.5); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                                <p><strong>Confidence:</strong> 97.3%</p>
-                                <p><strong>Text:</strong> "Sample extracted text from your uploaded image. This AI OCR system can process various document types including invoices, contracts, and handwritten notes."</p>
-                                <p><strong>Processing Time:</strong> 2.3s</p>
-                            </div>
-                        `;
-                    }, 500);
-                }
-            }, 100);
-        }
-
-        // LLM Demo
-        function callLLM() {
-            const prompt = document.getElementById('llmPrompt').value;
-            const response = document.getElementById('llmResponse');
-            
-            response.innerHTML = '<div style="color: #8b5cf6;">🤔 Generating response...</div>';
-            
-            setTimeout(() => {
-                response.innerHTML = `
-                    <p><strong>Supervised Learning:</strong></p>
-                    <p>• Uses labeled training data</p>
-                    <p>• Goal is to predict specific outputs</p>
-                    <p>• Examples: classification, regression</p>
-                    <br>
-                    <p><strong>Unsupervised Learning:</strong></p>
-                    <p>• Works with unlabeled data</p>
-                    <p>• Discovers hidden patterns</p>
-                    <p>• Examples: clustering, dimensionality reduction</p>
-                    <br>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">Response generated using integrated LLM API</p>
-                `;
-            }, 2000);
-        }
-
-        // Chart Visualization
-        function createChart() {
-            const svg = document.getElementById('performanceChart');
-            const data = [
-                { name: 'Accuracy', value: 94.2 },
-                { name: 'Precision', value: 91.8 },
-                { name: 'Recall', value: 89.5 },
-                { name: 'F1-Score', value: 90.6 }
-            ];
-            
-            const width = svg.clientWidth;
-            const height = 300;
-            const margin = { top: 20, right: 30, bottom: 40, left: 60 };
-            
-            svg.innerHTML = '';
-            
-            data.forEach((d, i) => {
-                const barHeight = (d.value / 100) * (height - margin.top - margin.bottom);
-                const x = margin.left + i * (width - margin.left - margin.right) / data.length + 20;
-                const y = height - margin.bottom - barHeight;
-                const barWidth = (width - margin.left - margin.right) / data.length - 40;
-                
-                // Bar
-                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                rect.setAttribute('x', x);
-                rect.setAttribute('y', y);
-                rect.setAttribute('width', barWidth);
-                rect.setAttribute('height', barHeight);
-                rect.setAttribute('class', 'bar');
-                svg.appendChild(rect);
-                
-                // Label
-                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', x + barWidth / 2);
-                text.setAttribute('y', height - margin.bottom + 20);
-                text.setAttribute('text-anchor', 'middle');
-                text.setAttribute('fill', '#e2e8f0');
-                text.textContent = d.name;
-                svg.appendChild(text);
-                
-                // Value
-                const value = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                value.setAttribute('x', x + barWidth / 2);
-                value.setAttribute('y', y - 5);
-                value.setAttribute('text-anchor', 'middle');
-                value.setAttribute('fill', '#e2e8f0');
-                value.setAttribute('font-size', '12');
-                value.textContent = d.value + '%';
-                svg.appendChild(value);
+        // Skill progress bar animation
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach((bar, index) => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, index * 200);
             });
         }
-
-        function updateChart() {
-            // Simulate new data
-            const data = [
-                { name: 'Accuracy', value: Math.random() * 10 + 90 },
-                { name: 'Precision', value: Math.random() * 10 + 88 },
-                { name: 'Recall', value: Math.random() * 10 + 85 },
-                { name: 'F1-Score', value: Math.random() * 10 + 87 }
-            ];
-            
-            const svg = document.getElementById('performanceChart');
-            const bars = svg.querySelectorAll('.bar');
-            const values = svg.querySelectorAll('text');
-            
-            data.forEach((d, i) => {
-                if (bars[i]) {
-                    const height = 300;
-                    const margin = { top: 20, right: 30, bottom: 40, left: 60 };
-                    const barHeight = (d.value / 100) * (height - margin.top - margin.bottom);
-                    const y = height - margin.bottom - barHeight;
-                    
-                    bars[i].setAttribute('y', y);
-                    bars[i].setAttribute('height', barHeight);
-                }
-                
-                // Update value text (every other text element is a value)
-                if (values[i * 2 + 1]) {
-                    values[i * 2 + 1].textContent = d.value.toFixed(1) + '%';
-                }
-            });
-        }
-
-        // Initialize chart
-        window.addEventListener('load', createChart);
-        window.addEventListener('resize', createChart);
 
         // Intersection Observer for animations
         const observerOptions = {
@@ -1353,29 +1533,55 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    
+                    // Trigger skill bar animation if it's the resume section
+                    if (entry.target.id === 'resume') {
+                        setTimeout(animateSkillBars, 500);
+                    }
                 }
             });
         }, observerOptions);
 
-        // Observe skill cards and project cards
+        // Initialize animations
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.skill-card, .project-card, .resume-section, .blog-card').forEach(el => {
+            // Observe elements for fade-in animations
+            document.querySelectorAll('.skill-card, .project-card, .demo-container, .blog-card').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 observer.observe(el);
             });
+
+            // Observe resume section for skill bar animation
+            const resumeSection = document.getElementById('resume');
+            if (resumeSection) {
+                observer.observe(resumeSection);
+            }
+
+            // Initialize document upload functionality
+            initDocumentUpload();
         });
 
+        // Initialize chart on load and resize
+        window.addEventListener('load', createChart);
+        window.addEventListener('resize', createChart);
+
         // Typing effect for hero subtitle
-        function typeWriter(element, text, speed = 50) {
+        function typeWriter(element, text, speed = 30) {
             let i = 0;
             element.textContent = '';
+            element.style.borderRight = '2px solid var(--primary-color)';
+            
             function type() {
                 if (i < text.length) {
                     element.textContent += text.charAt(i);
                     i++;
                     setTimeout(type, speed);
+                } else {
+                    // Remove cursor after typing is complete
+                    setTimeout(() => {
+                        element.style.borderRight = 'none';
+                    }, 1000);
                 }
             }
             type();
@@ -1383,12 +1589,14 @@
 
         // Initialize typing effect
         window.addEventListener('load', () => {
-            const subtitle = document.querySelector('.hero-subtitle');
-            const originalText = subtitle.textContent;
-            typeWriter(subtitle, originalText, 30);
+            setTimeout(() => {
+                const subtitle = document.querySelector('.hero-subtitle');
+                const originalText = subtitle.textContent;
+                typeWriter(subtitle, originalText, 40);
+            }, 1000);
         });
 
-        // Add particle system
+        // Add particle system for background animation
         class ParticleSystem {
             constructor() {
                 this.particles = [];
@@ -1399,7 +1607,7 @@
                 this.canvas.style.left = '0';
                 this.canvas.style.pointerEvents = 'none';
                 this.canvas.style.zIndex = '1';
-                this.canvas.style.opacity = '0.3';
+                this.canvas.style.opacity = '0.1';
                 document.body.appendChild(this.canvas);
                 
                 this.resize();
@@ -1415,13 +1623,15 @@
             }
             
             init() {
-                for (let i = 0; i < 50; i++) {
+                const particleCount = window.innerWidth < 768 ? 20 : 40;
+                for (let i = 0; i < particleCount; i++) {
                     this.particles.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        size: Math.random() * 2 + 1
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        size: Math.random() * 2 + 1,
+                        opacity: Math.random() * 0.5 + 0.2
                     });
                 }
             }
@@ -1438,8 +1648,26 @@
                     
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    this.ctx.fillStyle = '#6366f1';
+                    this.ctx.fillStyle = `rgba(139, 92, 246, ${particle.opacity})`;
                     this.ctx.fill();
+                });
+                
+                // Draw connections between nearby particles
+                this.particles.forEach((particle1, i) => {
+                    this.particles.slice(i + 1).forEach(particle2 => {
+                        const dx = particle1.x - particle2.x;
+                        const dy = particle1.y - particle2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(particle1.x, particle1.y);
+                            this.ctx.lineTo(particle2.x, particle2.y);
+                            this.ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - distance / 100)})`;
+                            this.ctx.lineWidth = 1;
+                            this.ctx.stroke();
+                        }
+                    });
                 });
                 
                 requestAnimationFrame(() => this.animate());
@@ -1451,145 +1679,148 @@
             new ParticleSystem();
         });
 
-        // Add interactive hover effects to skill cards
+        // Add interactive hover effects
         document.addEventListener('DOMContentLoaded', () => {
+            // Skill card hover effects
             const skillCards = document.querySelectorAll('.skill-card');
-            
             skillCards.forEach(card => {
                 card.addEventListener('mouseenter', () => {
-                    card.style.background = 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)';
+                    card.style.transform = 'translateY(-10px) scale(1.02)';
+                    card.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
                 });
                 
                 card.addEventListener('mouseleave', () => {
-                    card.style.background = 'var(--dark-card)';
+                    card.style.transform = 'translateY(0) scale(1)';
+                    card.style.boxShadow = 'none';
+                });
+            });
+
+            // Project card hover effects
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px)';
+                    card.style.boxShadow = '0 15px 30px rgba(139, 92, 246, 0.25)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = 'none';
+                });
+            });
+
+            // Button hover effects
+            const buttons = document.querySelectorAll('.api-button, .cta-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.transform = 'translateY(-3px) scale(1.05)';
+                });
+                
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateY(0) scale(1)';
                 });
             });
         });
 
-        // Add progress bars to skills
-        function animateProgressBars() {
-            const skills = [
-                { name: 'Python/ML', level: 95 },
-                { name: 'LLMs/NLP', level: 90 },
-                { name: 'DevOps/CI-CD', level: 85 },
-                { name: 'Computer Vision', level: 88 }
-            ];
-            
-            const skillsSection = document.getElementById('skills');
-            const progressContainer = document.createElement('div');
-            progressContainer.className = 'skills-progress';
-            progressContainer.style.marginTop = '3rem';
-            
-            skills.forEach(skill => {
-                const skillDiv = document.createElement('div');
-                skillDiv.style.marginBottom = '1.5rem';
-                
-                skillDiv.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span>${skill.name}</span>
-                        <span>${skill.level}%</span>
-                    </div>
-                    <div style="width: 100%; height: 8px; background: rgba(99, 102, 241, 0.2); border-radius: 4px; overflow: hidden;">
-                        <div class="skill-progress" style="height: 100%; background: var(--gradient-1); width: 0%; transition: width 2s ease;"></div>
-                    </div>
-                `;
-                
-                progressContainer.appendChild(skillDiv);
+        // Add scroll-triggered animations
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-element');
+            const speed = 0.5;
+
+            parallax.forEach(element => {
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
             });
-            
-            skillsSection.querySelector('.container').appendChild(progressContainer);
-            
-            // Animate progress bars when they come into view
-            const progressObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const progressBars = entry.target.querySelectorAll('.skill-progress');
-                        progressBars.forEach((bar, index) => {
-                            setTimeout(() => {
-                                bar.style.width = skills[index].level + '%';
-                            }, index * 200);
-                        });
-                    }
-                });
-            });
-            
-            progressObserver.observe(progressContainer);
+        });
+
+        // Add loading states for interactive elements
+        function addLoadingState(element, duration = 2000) {
+            element.classList.add('loading');
+            setTimeout(() => {
+                element.classList.remove('loading');
+            }, duration);
         }
 
-        // Initialize progress bars
-        window.addEventListener('load', animateProgressBars);
-
-        // Add contact section
-        const contactSection = document.createElement('section');
-        contactSection.id = 'contact';
-        contactSection.innerHTML = `
-            <div class="container">
-                <h2 class="section-title">Get In Touch</h2>
-                <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem; color: var(--text-muted);">
-                        Ready to build something amazing together? Let's discuss your next AI/ML project.
-                   a </p>
-                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="mailto:abishec123@gmail.com" class="cta-button" style="text-decoration: none;">
-                            📧 Email Me
-                        </a>
-                        <a href="https://www.linkedin.com/in/abishec-selvarajah-8103b8210/" class="cta-button" style="background: var(--gradient-2); text-decoration: none;">
-                            💼 LinkedIn
-                        </a>
-                        <a href="https://github.com/abishecs" class="cta-button" style="background: var(--gradient-3); text-decoration: none;">
-                            🔗 GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.2);">
-                <p style="color: var(--text-muted);">&copy; Feel Free To Reach out to Me.</p>
-            </div>
-        `;
-        
-        document.body.appendChild(contactSection);
-
-        // Add contact to navigation
-        const contactNav = document.createElement('li');
-        contactNav.innerHTML = '<a href="#contact">Contact</a>';
-        document.querySelector('.nav-links').appendChild(contactNav);
-
-        // Enhanced OCR demo with more realistic simulation
-        function enhancedOCRDemo() {
-            const ocrDemo = document.querySelector('.ocr-demo');
-            
-            // Add more interactive elements
-            const advancedOCR = document.createElement('div');
-            advancedOCR.innerHTML = `
-                <div style="margin-top: 2rem;">
-                    <h4>OCR Settings</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
-                        <label style="display: flex; flex-direction: column;">
-                            <span>Language</span>
-                            <select style="background: var(--dark-bg); color: var(--text-light); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 5px; padding: 0.5rem;">
-                                <option>English</option>
-                                <option>Spanish</option>
-                                <option>French</option>
-                                <option>German</option>
-                            </select>
-                        </label>
-                        <label style="display: flex; flex-direction: column;">
-                            <span>Processing Mode</span>
-                            <select style="background: var(--dark-bg); color: var(--text-light); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 5px; padding: 0.5rem;">
-                                <option>Fast</option>
-                                <option>Accurate</option>
-                                <option>Handwriting</option>
-                            </select>
-                        </label>
-                    </div>
+        // Enhanced resume section with downloadable resume
+        function addResumeDownload() {
+            const resumeSection = document.getElementById('resume');
+            const downloadButton = document.createElement('div');
+            downloadButton.innerHTML = `
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="api-button" onclick="downloadResume()" style="background: var(--gradient-3);">
+                        📄 Download Full Resume
+                    </button>
                 </div>
             `;
+            resumeSection.querySelector('.container').appendChild(downloadButton);
+        }
+
+        function downloadResume() {
+            // Simulate resume download
+            const link = document.createElement('a');
+            link.href = '#';
+            link.download = 'Abishec_Selvarajah_Resume.pdf';
             
-            ocrDemo.appendChild(advancedOCR);
+            // Show download notification
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="position: fixed; top: 100px; right: 20px; background: var(--gradient-1); color: white; padding: 1rem 2rem; border-radius: 10px; z-index: 1001; animation: slideIn 0.3s ease;">
+                    📄 Resume download initiated!
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
 
         // Initialize enhanced features
-        window.addEventListener('load', enhancedOCRDemo);
+        window.addEventListener('load', () => {
+            addResumeDownload();
+            
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Add focus management for accessibility
+            const focusableElements = document.querySelectorAll('button, a, input, textarea');
+            focusableElements.forEach(element => {
+                element.addEventListener('focus', () => {
+                    element.style.outline = '2px solid var(--primary-color)';
+                    element.style.outlineOffset = '2px';
+                });
+                
+                element.addEventListener('blur', () => {
+                    element.style.outline = 'none';
+                });
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close mobile menu if open
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Add performance monitoring
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const loadTime = performance.now();
+                console.log(`Portfolio loaded in ${loadTime.toFixed(2)}ms`);
+            }
+        });
     </script>
 </body>
-</html>
+</html>rem;">→</div>
+                    <div class="git-stage" data-stage="test">
+                        <h4>🧪 Testing</h4>
+                        <p>PR Review</p>
+                        <div class="stage-status">
+                            <span>2</span>
+                        </div>
+                    </div>
+                    <div style="color: var(--primary-color); font-size: 1.5
